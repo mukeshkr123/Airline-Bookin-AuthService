@@ -76,3 +76,7 @@ To log a user out:
 
 5. create the db `npx sequelize db:create` it will create the database
 6. Then sync database `npx sequelize db:migrate`
+
+==> Create user model
+run the following command `npx sequelize model:generate --name User --attributes email:string,password:string`
+-> `npx sequelize db:migrate`
