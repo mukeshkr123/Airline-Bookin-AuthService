@@ -40,3 +40,39 @@ To log a user out:
 
 - Destroy the token on the client-side.
 - Optionally, invalidate the token on the server-side.
+
+# AuthService
+
+1. first setup express server and folder structure
+2. then install `npm i mysql2` and `npm i sequelize sequelize-cli`
+3. then initialize the `npx sequelize init` -> it will create folders - seeders, models, migrations and config
+4. Setup database configuration
+
+```json
+{
+  "development": {
+    "username": "root",
+    "password": "Mukeshkr123",
+    "database": "AUTH_DB_DEV",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
+
+5. create the db `npx sequelize db:create` it will create the database
+6. Then sync database `npx sequelize db:migrate`
