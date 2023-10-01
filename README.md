@@ -41,6 +41,8 @@ To log a user out:
 - Destroy the token on the client-side.
 - Optionally, invalidate the token on the server-side.
 
+
+
 # AuthService
 
 ## Step 1: Setup Express Server and Folder Structure
@@ -134,9 +136,27 @@ Your User model and database table are now set up and ready to use for authentic
 
 ---
 
-## Hashing the password using bcrypt
+To hash the password before creating a new user, you can use the `bcrypt` library. First, install `bcrypt`:
 
-**Installing the bcrpt**
-`npm install bcrypt`
+```bash
+npm install bcrypt
+```
 
-**use the beforeCreate hook to hash password after just user model defining**
+Then, use the `beforeCreate` hook in your User model to hash the password:
+
+```javascript
+// Hash the password before creating a new user
+User.beforeCreate(async (user) => {
+  try {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+    user.password = hashedPassword;
+  } catch (error) {
+    throw new Error("Error hashing the password");
+  }
+});
+```
+
+This code will hash the user's password before it is saved to the database, enhancing security.
+
+---
