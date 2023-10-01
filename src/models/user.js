@@ -1,16 +1,14 @@
 "use strict";
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // Define associations here if needed
     }
   }
+
   User.init(
     {
       email: {
@@ -18,14 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
         validate: {
-          isEmail: true,
+          isEmail: {
+            msg: "Invalid email format",
+          },
         },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          len: [3, 300],
+          len: {
+            args: [3, 300],
+            msg: "Password length must be between 3 and 300 characters",
+          },
         },
       },
     },
@@ -34,5 +37,17 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+
+  // Hash the password before creating a new user
+  User.beforeCreate(async (user) => {
+    try {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+      user.password = hashedPassword;
+    } catch (error) {
+      throw new Error("Error hashing the password");
+    }
+  });
+
   return User;
 };

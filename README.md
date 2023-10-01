@@ -43,10 +43,40 @@ To log a user out:
 
 # AuthService
 
-1. first setup express server and folder structure
-2. then install `npm i mysql2` and `npm i sequelize sequelize-cli`
-3. then initialize the `npx sequelize init` -> it will create folders - seeders, models, migrations and config
-4. Setup database configuration
+## Step 1: Setup Express Server and Folder Structure
+
+Create a new Node.js project and set up your folder structure:
+
+```bash
+mkdir AuthService
+cd AuthService
+npm init -y
+npm install express
+```
+
+Create an `index.js` file to set up your Express server.
+
+## Step 2: Install Sequelize and Sequelize CLI
+
+Install Sequelize and Sequelize CLI for working with MySQL databases:
+
+```bash
+npm install sequelize sequelize-cli mysql2
+```
+
+## Step 3: Initialize Sequelize
+
+Initialize Sequelize in your project using the following command:
+
+```bash
+npx sequelize init
+```
+
+This command will generate the following folders: `seeders`, `models`, `migrations`, and `config`.
+
+## Step 4: Setup Database Configuration
+
+Configure your database settings in the `config/config.json` file. Update the development, test, and production configurations with your MySQL credentials.
 
 ```json
 {
@@ -74,9 +104,39 @@ To log a user out:
 }
 ```
 
-5. create the db `npx sequelize db:create` it will create the database
-6. Then sync database `npx sequelize db:migrate`
+## Step 5: Create the Database
 
-==> Create user model
-run the following command `npx sequelize model:generate --name User --attributes email:string,password:string`
--> `npx sequelize db:migrate`
+Run the following command to create the database:
+
+```bash
+npx sequelize db:create
+```
+
+This command will create the database specified in your configuration.
+
+## Step 6: Create User Model
+
+Generate a User model using Sequelize CLI. Run the following command:
+
+```bash
+npx sequelize model:generate --name User --attributes email:string,password:string
+```
+
+This command will generate a User model in the `models` folder with email and password attributes.
+
+Now, apply the migration to create the User table:
+
+```bash
+npx sequelize db:migrate
+```
+
+Your User model and database table are now set up and ready to use for authentication.
+
+---
+
+## Hashing the password using bcrypt
+
+**Installing the bcrpt**
+`npm install bcrypt`
+
+**use the beforeCreate hook to hash password after just user model defining**
