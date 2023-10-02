@@ -32,6 +32,7 @@ class UserService {
       const newJWT = this.createToken({
         email: user.email,
         password: user.password,
+        id: user.id,
       });
       return newJWT;
     } catch (error) {
@@ -71,6 +72,7 @@ class UserService {
     try {
       const response = jwt.verify(token, JWT_KEY);
       return response;
+      console.log();
     } catch (error) {
       console.log("Something went wrong in token validation");
       throw error;
