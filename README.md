@@ -160,3 +160,7 @@ User.beforeCreate(async (user) => {
 This code will hash the user's password before it is saved to the database, enhancing security.
 
 ---
+
+## Create JSON web token
+
+**Install json web token** - `npm install jsonwebtoken`
