@@ -41,8 +41,6 @@ To log a user out:
 - Destroy the token on the client-side.
 - Optionally, invalidate the token on the server-side.
 
-
-
 # AuthService
 
 ## Step 1: Setup Express Server and Folder Structure
@@ -135,6 +133,8 @@ npx sequelize db:migrate
 Your User model and database table are now set up and ready to use for authentication.
 
 ---
+
+## Hashing the Password Using bcrypt
 
 To hash the password before creating a new user, you can use the `bcrypt` library. First, install `bcrypt`:
 
