@@ -157,6 +157,19 @@ User.beforeCreate(async (user) => {
 });
 ```
 
+2. verify the password
+
+```javascript
+ checkPassword(userInputPlainPassword, encryptedPassword) {
+    try {
+      return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
+    } catch (error) {
+      console.log("Something went wrong in password comparison");
+      throw error;
+    }
+  }
+```
+
 This code will hash the user's password before it is saved to the database, enhancing security.
 
 ---
@@ -164,3 +177,45 @@ This code will hash the user's password before it is saved to the database, enha
 ## Create JSON web token
 
 **Install json web token** - `npm install jsonwebtoken`
+
+1. Create a new web token
+
+```javascript
+createToken(user) {
+    try {
+      const result = jwt.sign(user, JWT_KEY, { expiresIn: "1h" });
+      return result;
+    } catch (error) {
+      console.log("Something went wrong in token creation");
+      throw error;
+    }
+  }
+
+```
+
+2. Verify a jsw token
+
+```javascript
+verifyToken(token) {
+    try {
+      const response = jwt.verify(token, JWT_KEY);
+      return response;
+      console.log();
+    } catch (error) {
+      console.log("Something went wrong in token validation");
+      throw error;
+    }
+  }
+```
+
+## Create a Role Model
+
+**create the command** `npx sequelize model:genrate --name Role --attributes  name:string `
+
+then ` npx sequelize db:migrate`
+
+create seeders for user roles
+`npx sequelize seed:generate --name add-roles`
+
+insert bulk insert
+` npx sequelize db:seed --seed 20231004081405-add-roles.js`
